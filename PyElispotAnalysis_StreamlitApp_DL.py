@@ -68,7 +68,7 @@ st.set_page_config(
 # Set the title of the web app
 st.title(':blue[Spot detection for Elispot assay images]')
 
-st.caption('Application screenshots and source code available [here](https://github.com/ajinkya-kulkarni/PyElispotAnalysis). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/PyElispotAnalysis/blob/main/image.tif).', unsafe_allow_html = False)
+st.caption('Application screenshots and source code available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp/blob/main/image.tif).', unsafe_allow_html = False)
 
 st.divider()
 
