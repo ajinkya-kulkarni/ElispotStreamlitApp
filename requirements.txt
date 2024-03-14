@@ -1,0 +1,8 @@
+streamlit
+numpy
+scikit-image
+matplotlib
+Pillow
+torch
+torchvision
+spotiflow
