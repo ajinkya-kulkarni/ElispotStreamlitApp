@@ -54,7 +54,7 @@ image_bytes = BytesIO(image_data)
 st.set_page_config(
 	page_title='PyElispotAnalysis',
 	page_icon=image_bytes,  # Use the logo image as the page icon
-	layout="centered",
+	layout="wide",
 	initial_sidebar_state="expanded",
 	menu_items={
 		'Get help': 'mailto:ajinkya.kulkarni@mpinat.mpg.de',
@@ -155,7 +155,7 @@ output_image_size = (674, 674)
 # Since the figure size is in inches, and we want the final image size in pixels,
 # we can set the DPI such that when multiplied by the figure size in inches,
 # it gives the desired size in pixels.
-dpi = 200
+dpi = 300
 fig_size = (output_image_size[0] / dpi, output_image_size[1] / dpi)
 
 # Create the figure with the specified size and DPI
@@ -163,7 +163,7 @@ fig = plt.figure(figsize=fig_size, dpi=dpi)
 
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
-scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap,
+scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap,
 linewidth=0.5, edgecolors='black', alpha=0.6)
 plt.axis("off")
 
@@ -180,7 +180,16 @@ pil_img = Image.open(buf)
 
 ##############################################################
 
-image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+	st.empty()
+
+with col2:
+	image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
+
+with col3:
+	st.empty()
 
 ##############################################################
 
@@ -200,7 +209,7 @@ st.divider()
 ##########################################################################
 
 # Setup figure and axes for a 1x4 grid
-fig, axs = plt.subplots(1, 3, figsize=(12, 4))
+fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
 
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
@@ -209,7 +218,7 @@ axs[0].set_title('Image', pad = 15)
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap, 
+scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=15, cmap=custom_cmap, 
 linewidth=0.5, edgecolors='black', alpha=0.6)
 axs[1].axis("off")
 axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 15)
