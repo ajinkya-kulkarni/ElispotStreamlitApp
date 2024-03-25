@@ -54,7 +54,7 @@ image_bytes = BytesIO(image_data)
 st.set_page_config(
 	page_title='PyElispotAnalysis',
 	page_icon=image_bytes,  # Use the logo image as the page icon
-	layout="wide",
+	layout="centered",
 	initial_sidebar_state="expanded",
 	menu_items={
 		'Get help': 'mailto:ajinkya.kulkarni@mpinat.mpg.de',
@@ -180,16 +180,18 @@ pil_img = Image.open(buf)
 
 ##############################################################
 
-col1, col2, col3 = st.columns(3)
+# col1, col2, col3 = st.columns(3)
 
-with col1:
-	st.empty()
+# with col1:
+# 	st.empty()
 
-with col2:
-	image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
+# with col2:
+# 	image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
 
-with col3:
-	st.empty()
+# with col3:
+# 	st.empty()
+
+image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
 
 ##############################################################
 
