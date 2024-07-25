@@ -70,8 +70,6 @@ st.title(':blue[Spot detection for Elispot assay images]')
 
 st.caption('Application screenshots and source code available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp/blob/main/image.tif).', unsafe_allow_html = False)
 
-st.divider()
-
 ##########################################################################
 
 # # Create a form using the "form" method of Streamlit
@@ -88,8 +86,6 @@ uploaded_file = st.file_uploader("Upload a file", type = ["tif", "tiff", "png", 
 # If no file was uploaded, stop processing and exit early
 if uploaded_file is None:
 	st.stop()
-
-st.divider()
 
 ##############################################################
 
