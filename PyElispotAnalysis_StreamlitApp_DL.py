@@ -132,7 +132,7 @@ max_val = mean_intensities.max()
 
 normalized_mean_intensities = (mean_intensities - min_val) / (max_val - min_val)
 
-print(normalized_mean_intensities.min(), normalized_mean_intensities.max(), normalized_mean_intensities.shape, normalized_mean_intensities.ndim)
+st.write(normalized_mean_intensities.min(), normalized_mean_intensities.max(), normalized_mean_intensities.shape, normalized_mean_intensities.ndim)
 
 ##############################################################
 
