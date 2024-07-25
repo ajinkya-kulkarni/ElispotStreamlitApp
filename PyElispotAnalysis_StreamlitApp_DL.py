@@ -112,6 +112,8 @@ points, details = spotiflow_model.predict(inverted_image_array, exclude_border=F
 x_coords = points[:, 1].astype(int)
 y_coords = points[:, 0].astype(int)
 
+assert len(x_coords) == len(y_coords), "The lengths of x_coords and y_coords are not the same."
+
 # Pair x and y coordinates
 points = list(zip(x_coords, y_coords))
 
@@ -152,6 +154,7 @@ fig = plt.figure(figsize=(10, 5), dpi = 200)
 plt.imshow(display_image, cmap="gray")
 # scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
 scatter = plt.scatter(x_coords, y_coords, s=30, linewidth=1, edgecolors='yellow', facecolors = "None", alpha=0.5)
+plt.title(f'{len(x_coords)} spots detected')
 plt.axis("off")
 
 # Adjust layout
