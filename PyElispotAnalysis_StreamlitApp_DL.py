@@ -149,7 +149,7 @@ output_image_size = (674, 674)
 # Since the figure size is in inches, and we want the final image size in pixels,
 # we can set the DPI such that when multiplied by the figure size in inches,
 # it gives the desired size in pixels.
-dpi = 500
+dpi = 300
 fig_size = (output_image_size[0] / dpi, output_image_size[1] / dpi)
 
 # Create the figure with the specified size and DPI
@@ -164,28 +164,9 @@ plt.axis("off")
 # Adjust layout
 plt.tight_layout()
 
-# Save the figure to a bytes buffer
-buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
-buf.seek(0)
-
-# Load the image from the buffer
-pil_img = Image.open(buf)
-
 ##############################################################
 
 image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
-
-##############################################################
-
-buf = BytesIO()
-pil_img.save(buf, format="TIFF")
-byte_im = buf.getvalue()
-
-btn = st.download_button(label="Download Image", data=byte_im, file_name="Result1.tif")
-
-# Close the buffer
-buf.close()
 
 ##########################################################################
 
@@ -221,25 +202,6 @@ plt.tight_layout()
 st.pyplot(fig)
 
 ##########################################################################
-
-# Save the figure to a bytes buffer
-buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
-buf.seek(0)
-
-# Load the image from the buffer
-pil_img = Image.open(buf)
-
-##############################################################
-
-buf = BytesIO()
-pil_img.save(buf, format="TIFF")
-byte_im = buf.getvalue()
-
-btn = st.download_button(label="Download Image", data=byte_im, file_name="Result2.tif")
-
-# Close the buffer
-buf.close()
 
 st.stop()
 
