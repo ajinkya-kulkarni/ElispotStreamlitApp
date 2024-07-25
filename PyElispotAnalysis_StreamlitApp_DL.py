@@ -181,26 +181,15 @@ with st.form(key = 'form1', clear_on_submit = False):
 		
 		##############################################################
 		
-		# col1, col2, col3 = st.columns(3)
-		
-		# with col1:
-		# 	st.empty()
-		
-		# with col2:
-		# 	image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
-		
-		# with col3:
-		# 	st.empty()
-		
 		image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
 		
 		##############################################################
 		
-		# buf = BytesIO()
-		# pil_img.save(buf, format="TIFF")
-		# byte_im = buf.getvalue()
+		buf = BytesIO()
+		pil_img.save(buf, format="TIFF")
+		byte_im = buf.getvalue()
 		
-		# btn = st.download_button(label="Download Image", data=byte_im, file_name="Result.tif")
+		btn = st.download_button(label="Download Image", data=byte_im, file_name="Result.tif")
 		
 		# Close the buffer
 		buf.close()
