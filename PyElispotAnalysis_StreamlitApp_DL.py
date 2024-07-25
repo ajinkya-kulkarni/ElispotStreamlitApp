@@ -158,7 +158,7 @@ fig = plt.figure(figsize=fig_size, dpi=dpi)
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
 # scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
-scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='black', alpha=0.5)
+scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='black', facecolors = 'yellow', alpha=0.5)
 plt.axis("off")
 
 # Adjust layout
