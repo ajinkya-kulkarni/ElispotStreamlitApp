@@ -205,11 +205,25 @@ axs[2].set_xlim(-0.02, 1.02)
 # Adjust layout
 plt.tight_layout()
 
-st.pyplot(fig)
+# st.pyplot(fig)
 
 ##########################################################################
 
+# Save the figure to a bytes buffer
+buf = BytesIO()
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = 300, pad_inches=0)
+buf.seek(0)
+# Load the image from the buffer
+pil_img = Image.open(buf)
 
+buf = BytesIO()
+pil_img.save(buf, format="TIFF")
+byte_im = buf.getvalue()
+
+btn = st.download_button(label="Download Intensity Image", data=byte_im, file_name="Result2.tif")
+
+# Close the buffer
+buf.close()
 
 ##########################################################################
 
