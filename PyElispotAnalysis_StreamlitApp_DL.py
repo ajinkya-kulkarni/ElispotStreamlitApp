@@ -148,23 +148,13 @@ custom_cmap = subset_colormap(plt.cm.coolwarm_r, 0, 1)
 
 ##############################################################
 
-# Define the desired output image size in pixels
-output_image_size = (674, 674)
-
-# Define the DPI for the figure to match the desired output size
-# Since the figure size is in inches, and we want the final image size in pixels,
-# we can set the DPI such that when multiplied by the figure size in inches,
-# it gives the desired size in pixels.
-dpi = 300
-fig_size = (output_image_size[0] / dpi, output_image_size[1] / dpi)
-
 # Create the figure with the specified size and DPI
-fig = plt.figure(figsize=fig_size, dpi=dpi)
+fig = plt.figure(figsize=(10, 5))
 
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
-scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap,
-linewidth=0.5, edgecolors='black', alpha=0.6)
+# scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
+scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='yellow', facecolors = None, alpha=0.5)
 plt.axis("off")
 
 # Adjust layout
@@ -172,34 +162,19 @@ plt.tight_layout()
 
 # Save the figure to a bytes buffer
 buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = 300, pad_inches=0)
 buf.seek(0)
 
 # Load the image from the buffer
 pil_img = Image.open(buf)
 
-##############################################################
+##########################################################################
 
-# col1, col2, col3 = st.columns(3)
+buf = BytesIO()
+pil_img.save(buf, format="TIFF")
+byte_im = buf.getvalue()
 
-# with col1:
-# 	st.empty()
-
-# with col2:
-# 	image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
-
-# with col3:
-# 	st.empty()
-
-image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
-
-##############################################################
-
-# buf = BytesIO()
-# pil_img.save(buf, format="TIFF")
-# byte_im = buf.getvalue()
-
-# btn = st.download_button(label="Download Image", data=byte_im, file_name="Result.tif")
+btn = st.download_button(label="Download Result Image", data=byte_im, file_name="Result1.tif")
 
 # Close the buffer
 buf.close()
@@ -212,19 +187,19 @@ fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
 axs[0].axis("off")
-axs[0].set_title('Image', pad = 15)
+axs[0].set_title('Image', pad = 10)
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=15, cmap=custom_cmap, 
-linewidth=0.5, edgecolors='black', alpha=0.6)
+scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, 
+linewidth=0.5, edgecolors='black', alpha=0.5)
 axs[1].axis("off")
-axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 15)
+axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 10)
 
 # Fourth subplot: Normalized histogram of spot intensities
-n, bins, patches = axs[2].hist(intensity_image, bins='auto', color='tab:blue', density=True, 
-alpha=0.7, rwidth=0.7)
-axs[2].set_title('Normalized Spot Intensities', pad = 15)
+n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True, 
+alpha=0.5, rwidth=0.5)
+axs[2].set_title('Normalized Spot Intensities', pad = 10)
 axs[2].set_xlabel('Normalized Intensity')
 axs[2].set_ylabel('Frequency')
 axs[2].grid(which='both', axis='y', alpha=0.1)
@@ -235,7 +210,25 @@ axs[2].set_xlim(-0.02, 1.02)
 # Adjust layout
 plt.tight_layout()
 
-st.pyplot(fig)
+# st.pyplot(fig)
+
+##########################################################################
+
+buf.seek(0)
+
+# Load the image from the buffer
+pil_img = Image.open(buf)
+
+##########################################################################
+
+buf = BytesIO()
+pil_img.save(buf, format="TIFF")
+byte_im = buf.getvalue()
+
+btn = st.download_button(label="Download Intensity Image", data=byte_im, file_name="Result2.tif")
+
+# Close the buffer
+buf.close()
 
 ##########################################################################
 
