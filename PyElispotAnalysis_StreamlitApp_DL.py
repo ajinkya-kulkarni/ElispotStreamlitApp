@@ -236,6 +236,10 @@ buf.close()
 
 ##########################################################################
 
+st.divider()
+
+##########################################################################
+
 def create_intensity_stats(normalized_mean_intensities):
     stats = {
         "Spots": len(normalized_mean_intensities),
