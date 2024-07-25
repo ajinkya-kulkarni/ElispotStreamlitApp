@@ -195,7 +195,7 @@ axs[0].set_title('Image', pad = 10)
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=30, cmap=custom_cmap, 
+scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap, 
 linewidth=1, edgecolors='black', alpha=0.5)
 axs[1].axis("off")
 axs[1].set_title(f'Prediction, {len(y_coords)} Spots')
