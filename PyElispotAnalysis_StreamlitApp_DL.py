@@ -150,7 +150,7 @@ fig = plt.figure(figsize=(10, 5))
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
 # scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
-scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='yellow', facecolors = None, alpha=0.5)
+scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='yellow', facecolors = "None", alpha=0.5)
 plt.axis("off")
 
 # Adjust layout
@@ -176,36 +176,36 @@ buf.close()
 
 ##########################################################################
 
-# # Setup figure and axes for a 1x4 grid
-# fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
+# Setup figure and axes for a 1x4 grid
+fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
 
-# # First subplot: Just the original image
-# axs[0].imshow(display_image, cmap="gray")
-# axs[0].axis("off")
-# axs[0].set_title('Image', pad = 10)
+# First subplot: Just the original image
+axs[0].imshow(display_image, cmap="gray")
+axs[0].axis("off")
+axs[0].set_title('Image', pad = 10)
 
-# # Third subplot: Original image with scatter points colored by intensity
-# axs[1].imshow(display_image, cmap="gray")
-# scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, 
-# linewidth=0.5, edgecolors='black', alpha=0.5)
-# axs[1].axis("off")
-# axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 10)
+# Third subplot: Original image with scatter points colored by intensity
+axs[1].imshow(display_image, cmap="gray")
+scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, 
+linewidth=0.5, edgecolors='black', alpha=0.5)
+axs[1].axis("off")
+axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 10)
 
-# # Fourth subplot: Normalized histogram of spot intensities
-# n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True, 
-# alpha=0.5, rwidth=0.5)
-# axs[2].set_title('Normalized Spot Intensities', pad = 10)
-# axs[2].set_xlabel('Normalized Intensity')
-# axs[2].set_ylabel('Frequency')
-# axs[2].grid(which='both', axis='y', alpha=0.1)
-# axs[2].grid(which='both', axis='x', alpha=0.1)
-# axs[2].set_ylim(0, np.ceil(max(n) * 10) / 10 + 0.5)
-# axs[2].set_xlim(-0.02, 1.02)
+# Fourth subplot: Normalized histogram of spot intensities
+n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True, 
+alpha=0.5, rwidth=0.5)
+axs[2].set_title('Normalized Spot Intensities', pad = 10)
+axs[2].set_xlabel('Normalized Intensity')
+axs[2].set_ylabel('Frequency')
+axs[2].grid(which='both', axis='y', alpha=0.1)
+axs[2].grid(which='both', axis='x', alpha=0.1)
+axs[2].set_ylim(0, np.ceil(max(n) * 10) / 10 + 0.5)
+axs[2].set_xlim(-0.02, 1.02)
 
-# # Adjust layout
-# plt.tight_layout()
+# Adjust layout
+plt.tight_layout()
 
-# st.pyplot(fig)
+st.pyplot(fig)
 
 ##########################################################################
 
