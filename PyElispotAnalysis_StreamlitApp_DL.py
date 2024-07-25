@@ -25,6 +25,7 @@ from io import BytesIO
 
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 from spotiflow.model import Spotiflow
 spotiflow_model = Spotiflow.from_folder("Pre_Trained_Model")
@@ -234,6 +235,41 @@ btn = st.download_button(label="Download Intensity Image", data=byte_im, file_na
 buf.close()
 
 ##########################################################################
+
+def create_intensity_stats(normalized_mean_intensities):
+    stats = {
+        "Length": len(normalized_mean_intensities),
+        "Min": np.min(normalized_mean_intensities),
+        "Max": np.max(normalized_mean_intensities),
+        "Median": np.median(normalized_mean_intensities),
+        "Std Dev": np.std(normalized_mean_intensities)
+    }
+    
+    return pd.DataFrame([stats])
+
+##############################################################
+
+dataframe = create_intensity_stats(normalized_mean_intensities)
+
+st.dataframe(dataframe.style.format("{:.2f}"), use_container_width = True)
+
+##############################################################
+
+@st.cache_data
+def convert_df(df):
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_csv().encode('utf-8')
+
+csv = convert_df(dataframe)
+
+##############################################################
+
+st.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name='dataframe.csv',
+    mime='text/csv',
+)
 
 st.stop()
 
