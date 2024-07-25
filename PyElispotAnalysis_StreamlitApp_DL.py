@@ -147,12 +147,12 @@ custom_cmap = subset_colormap(plt.cm.coolwarm_r, 0, 1)
 ##############################################################
 
 # Create the figure with the specified size and DPI
-fig = plt.figure(figsize=(10, 5))
+fig = plt.figure(figsize=(10, 5), dpi = 200)
 
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
 # scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
-scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='yellow', facecolors = "None", alpha=0.5)
+scatter = plt.scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='yellow', facecolors = "None", alpha=0.5)
 plt.axis("off")
 
 # Adjust layout
@@ -164,7 +164,7 @@ st.pyplot(fig)
 
 # Save the figure to a bytes buffer
 buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', dpi = 300, pad_inches=0)
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = 200, pad_inches=0)
 buf.seek(0)
 # Load the image from the buffer
 pil_img = Image.open(buf)
@@ -185,7 +185,7 @@ st.divider()
 ##########################################################################
 
 # Setup figure and axes for a 1x4 grid
-fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
+fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=200)
 
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
@@ -194,15 +194,15 @@ axs[0].set_title('Image', pad = 10)
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, 
+scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap, 
 linewidth=0.5, edgecolors='black', alpha=0.5)
 axs[1].axis("off")
-axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 10)
+axs[1].set_title(f'Prediction, {len(y_coords)} Spots')
 
 # Fourth subplot: Normalized histogram of spot intensities
 n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True, 
 alpha=0.5, rwidth=0.5)
-axs[2].set_title('Normalized Spot Intensities', pad = 10)
+axs[2].set_title('Normalized Spot Intensities')
 axs[2].set_xlabel('Normalized Intensity')
 axs[2].set_ylabel('Frequency')
 axs[2].grid(which='both', axis='y', alpha=0.1)
@@ -219,7 +219,7 @@ st.pyplot(fig)
 
 # Save the figure to a bytes buffer
 buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', dpi = 300, pad_inches=0)
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = 200, pad_inches=0)
 buf.seek(0)
 # Load the image from the buffer
 pil_img = Image.open(buf)
