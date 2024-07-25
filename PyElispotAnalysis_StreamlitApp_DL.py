@@ -238,11 +238,14 @@ buf.close()
 
 def create_intensity_stats(normalized_mean_intensities):
     stats = {
-        "Length": len(normalized_mean_intensities),
-        "Min": np.min(normalized_mean_intensities),
-        "Max": np.max(normalized_mean_intensities),
-        "Median": np.median(normalized_mean_intensities),
-        "Std Dev": np.std(normalized_mean_intensities)
+        "Spots": len(normalized_mean_intensities),
+        "Intensity Min": np.min(normalized_mean_intensities),
+        "Intensity Max": np.max(normalized_mean_intensities),
+        "Intensity Mean": np.mean(normalized_mean_intensities),
+        "Intensity Median": np.median(normalized_mean_intensities),
+        "Intensity Std Dev": np.std(normalized_mean_intensities),
+        "Intensity Variance": np.var(normalized_mean_intensities),
+        "Intensity Mode": pd.Series(normalized_mean_intensities).mode().values[0] if not pd.Series(normalized_mean_intensities).mode().empty else np.nan
     }
     
     return pd.DataFrame([stats])
