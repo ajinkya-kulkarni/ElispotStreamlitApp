@@ -59,7 +59,9 @@ st.set_page_config(
 	menu_items={
 		'Get help': 'mailto:ajinkya.kulkarni@mpinat.mpg.de',
 		'Report a bug': 'mailto:ajinkya.kulkarni@mpinat.mpg.de',
-		'About': 'This is an application for demonstrating the PyElispotAnalysis package. Developed, tested, and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni at the MPI-NAT, Goettingen.'})
+		'About': 'This is an application for demonstrating the PyElispotAnalysis package. Developed, tested, and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni at the MPI-NAT, Goettingen.'
+	}
+)
 
 ##########################################################################
 
@@ -67,6 +69,8 @@ st.set_page_config(
 st.title(':blue[Spot detection for Elispot assay images]')
 
 st.caption('Application screenshots and source code available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp/blob/main/image.tif).', unsafe_allow_html = False)
+
+st.divider()
 
 ##########################################################################
 
@@ -79,11 +83,13 @@ st.markdown(':blue[Upload the image to be analyzed.]')
 # Add a file uploader to allow the user to upload an image file
 uploaded_file = st.file_uploader("Upload a file", type = ["tif", "tiff", "png", "jpg", "jpeg"], accept_multiple_files = False, label_visibility = 'collapsed')
 
-##############################################################
+######################################################################
 
 # If no file was uploaded, stop processing and exit early
 if uploaded_file is None:
 	st.stop()
+
+st.divider()
 
 ##############################################################
 
@@ -157,21 +163,51 @@ fig = plt.figure(figsize=fig_size, dpi=dpi)
 
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
-# scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
-scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='black', facecolors = 'yellow', alpha=0.5)
+scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap,
+linewidth=0.5, edgecolors='black', alpha=0.6)
 plt.axis("off")
 
 # Adjust layout
 plt.tight_layout()
 
+# Save the figure to a bytes buffer
+buf = BytesIO()
+plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
+buf.seek(0)
+
+# Load the image from the buffer
+pil_img = Image.open(buf)
+
 ##############################################################
+
+# col1, col2, col3 = st.columns(3)
+
+# with col1:
+# 	st.empty()
+
+# with col2:
+# 	image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
+
+# with col3:
+# 	st.empty()
 
 image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
 
+##############################################################
+
+# buf = BytesIO()
+# pil_img.save(buf, format="TIFF")
+# byte_im = buf.getvalue()
+
+# btn = st.download_button(label="Download Image", data=byte_im, file_name="Result.tif")
+
+# Close the buffer
+buf.close()
+
 ##########################################################################
 
-# Setup figure and axes for a 1x3 grid
-fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=dpi)
+# Setup figure and axes for a 1x4 grid
+fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
 
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
@@ -181,7 +217,7 @@ axs[0].set_title('Image', pad = 15)
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
 scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=15, cmap=custom_cmap, 
-linewidth=0.5, edgecolors='black', alpha=0.5)
+linewidth=0.5, edgecolors='black', alpha=0.6)
 axs[1].axis("off")
 axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 15)
 
