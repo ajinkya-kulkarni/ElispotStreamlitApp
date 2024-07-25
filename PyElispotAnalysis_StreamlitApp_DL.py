@@ -158,7 +158,7 @@ fig = plt.figure(figsize=fig_size, dpi=dpi)
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
 # scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
-scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, linewidth=0.5, edgecolors='black', alpha=0.5)
+scatter = plt.scatter(x_coords, y_coords, s=10, linewidth=0.5, edgecolors='black', alpha=0.5)
 plt.axis("off")
 
 # Adjust layout
@@ -200,7 +200,7 @@ axs[0].set_title('Image', pad = 15)
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
 scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=15, cmap=custom_cmap, 
-linewidth=0.5, edgecolors='black', alpha=0.6)
+linewidth=0.5, edgecolors='black', alpha=0.5)
 axs[1].axis("off")
 axs[1].set_title(f'Prediction, {len(y_coords)} Spots', pad = 15)
 
