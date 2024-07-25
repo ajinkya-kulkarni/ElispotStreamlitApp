@@ -77,23 +77,22 @@ st.caption('Application screenshots and source code available [here](https://git
 st.markdown(':blue[Upload the image to be analyzed.]')
 
 with st.form(key = 'form1', clear_on_submit = False):
+	
 
 	# Add a file uploader to allow the user to upload an image file
 	uploaded_file = st.file_uploader("Upload a file", type = ["tif", "tiff", "png", "jpg", "jpeg"], accept_multiple_files = False, label_visibility = 'collapsed')
-	
-	######################################################################
-	
-	# If no file was uploaded, stop processing and exit early
-	if uploaded_file is None:
-		st.stop()
-
-	##############################################################
 
 	submitted = st.form_submit_button('Analyze')
 
 	##############################################################
 
 	if submitted:
+
+		# If no file was uploaded, stop processing and exit early
+		if uploaded_file is None:
+			st.stop()
+
+		##############################################################
 	
 		original_image = Image.open(uploaded_file).convert('L')
 		original_image_array = np.array(original_image)
