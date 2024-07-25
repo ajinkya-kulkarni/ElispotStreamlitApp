@@ -132,6 +132,8 @@ max_val = mean_intensities.max()
 
 normalized_mean_intensities = (mean_intensities - min_val) / (max_val - min_val)
 
+print(normalized_mean_intensities.min(), normalized_mean_intensities.max(), normalized_mean_intensities.shape, normalized_mean_intensities.ndim)
+
 ##############################################################
 
 display_image = original_image_array
@@ -156,6 +158,8 @@ plt.axis("off")
 # Adjust layout
 plt.tight_layout()
 
+st.pyplot(fig)
+
 ##########################################################################
 
 # Save the figure to a bytes buffer
@@ -173,6 +177,10 @@ btn = st.download_button(label="Download Result Image", data=byte_im, file_name=
 
 # Close the buffer
 buf.close()
+
+##########################################################################
+
+st.divider()
 
 ##########################################################################
 
@@ -205,7 +213,7 @@ axs[2].set_xlim(-0.02, 1.02)
 # Adjust layout
 plt.tight_layout()
 
-# st.pyplot(fig)
+st.pyplot(fig)
 
 ##########################################################################
 
