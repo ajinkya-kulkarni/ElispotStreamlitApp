@@ -25,6 +25,7 @@ from io import BytesIO
 
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 import pandas as pd
 
 from spotiflow.model import Spotiflow
@@ -192,18 +193,24 @@ fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=200)
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
 axs[0].axis("off")
-axs[0].set_title('Image', pad = 10)
+axs[0].set_title('Image', pad=10)
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap, 
-linewidth=1, edgecolors='black', alpha=0.5)
+scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap,
+                         linewidth=1, edgecolors='black', alpha=0.5)
 axs[1].axis("off")
 axs[1].set_title(f'Prediction, {len(y_coords)} Spots')
 
+# Add colorbar to the scatter plot
+divider = make_axes_locatable(axs[1])
+cax = divider.append_axes("right", size="5%", pad=0.05)
+cbar = fig.colorbar(scatter, cax=cax)
+cbar.set_label('Spot Intensity')
+
 # Fourth subplot: Normalized histogram of spot intensities
-n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True, 
-alpha=0.5, rwidth=0.5)
+n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True,
+                               alpha=0.5, rwidth=0.5)
 axs[2].set_title('Normalized Spot Intensities')
 axs[2].set_xlabel('Normalized Intensity')
 axs[2].set_ylabel('Frequency')
