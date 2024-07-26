@@ -56,7 +56,7 @@ image_bytes = BytesIO(image_data)
 st.set_page_config(
 	page_title='PyElispotAnalysis',
 	page_icon=image_bytes,  # Use the logo image as the page icon
-	layout="centered",
+	layout="wide",
 	initial_sidebar_state="expanded",
 	menu_items={
 		'Get help': 'mailto:ajinkya.kulkarni@mpinat.mpg.de',
