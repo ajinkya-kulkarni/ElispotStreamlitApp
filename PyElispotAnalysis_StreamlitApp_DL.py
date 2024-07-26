@@ -139,8 +139,7 @@ fig = plt.figure(figsize=(5, 5), dpi = 200)
 
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
-scatter = plt.scatter(x_coords, y_coords, s=20, linewidth=1, 
-                      edgecolors='black', facecolors = "None", alpha=0.5)
+scatter = plt.scatter(x_coords, y_coords, s=20, linewidth=1, edgecolors='black', facecolors = "yellow", alpha=0.5)
 plt.title(f'{len(x_coords)} spots detected')
 plt.axis("off")
 
