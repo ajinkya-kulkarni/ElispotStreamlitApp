@@ -197,7 +197,7 @@ axs[1].set_title(f'{len(y_coords)} Spots')
 
 # Add colorbar to the scatter plot
 divider = make_axes_locatable(axs[1])
-cax = divider.append_axes("right", size="5%", pad=0.05)
+cax = divider.append_axes("right", size="5%", pad=0.07)
 cbar = fig.colorbar(scatter, cax=cax)
 cbar.set_label('Normalized Spot Intensity')
 
