@@ -121,7 +121,7 @@ points = list(zip(x_coords, y_coords))
 ##############################################################
 
 # Define the neighborhood size (e.g., 3 for 3x3 neighborhood)
-neighborhood_size = 3
+neighborhood_size = 10
 
 # Calculate mean intensities
 mean_intensities = []
