@@ -122,6 +122,14 @@ intensities = spot_points[:, 2]
 
 ##############################################################
 
+# Min-max normalization
+min_value = np.min(intensities)
+max_value = np.max(intensities)
+
+normalized_intensities = (intensities - min_value) / (max_value - min_value)
+
+##############################################################
+
 display_image = original_image_np
 
 ##############################################################
@@ -184,7 +192,7 @@ axs[0].set_title('Image')
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image)
-scatter = axs[1].scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='black', c=intensities, cmap='coolwarm', alpha=0.5)
+scatter = axs[1].scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='black', c=normalized_intensities, cmap='coolwarm', alpha=0.5)
 axs[1].axis("off")
 axs[1].set_title(f'{len(y_coords)} Spots')
 
@@ -195,7 +203,7 @@ cbar = fig.colorbar(scatter, cax=cax)
 cbar.set_label('Normalized Spot Intensity')
 
 # Fourth subplot: Normalized histogram of spot intensities
-n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True, alpha=0.5, rwidth=0.5)
+n, bins, patches = axs[2].hist(normalized_intensities, bins=10, color='tab:blue', density=True, alpha=0.5, rwidth=0.5)
 axs[2].set_title('Normalized Spot Intensities')
 axs[2].set_xlabel('Normalized Intensity')
 axs[2].set_ylabel('Frequency')
@@ -233,23 +241,23 @@ st.divider()
 
 ##########################################################################
 
-def create_intensity_stats(normalized_mean_intensities):
+def create_intensity_stats(normalized_intensities):
     stats = {
-        "Spots": len(intensities),
-        "Intensity Min": np.min(intensities),
-        "Intensity Max": np.max(intensities),
-        "Intensity Mean": np.mean(intensities),
-        "Intensity Median": np.median(intensities),
-        "Intensity Std Dev": np.std(intensities),
-        "Intensity Variance": np.var(intensities),
-        "Intensity Mode": pd.Series(intensities).mode().values[0] if not pd.Series(intensities).mode().empty else np.nan
+        "Spots": len(normalized_intensities),
+        "Intensity Min": np.min(normalized_intensities),
+        "Intensity Max": np.max(normalized_intensities),
+        "Intensity Mean": np.mean(normalized_intensities),
+        "Intensity Median": np.median(normalized_intensities),
+        "Intensity Std Dev": np.std(normalized_intensities),
+        "Intensity Variance": np.var(normalized_intensities),
+        "Intensity Mode": pd.Series(normalized_intensities).mode().values[0] if not pd.Series(normalized_intensities).mode().empty else np.nan
     }
     
     return pd.DataFrame([stats])
 
 ##############################################################
 
-dataframe = create_intensity_stats(intensities)
+dataframe = create_intensity_stats(normalized_intensities)
 
 st.dataframe(dataframe.style.format("{:.2f}"), use_container_width = True)
 
