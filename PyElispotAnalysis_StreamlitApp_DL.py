@@ -161,7 +161,17 @@ plt.axis("off")
 # Adjust layout
 plt.tight_layout()
 
-st.pyplot(fig)
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.empty()
+	
+with col2:
+    st.pyplot(fig)
+
+with col3:
+    st.empty()
 
 ##########################################################################
 
