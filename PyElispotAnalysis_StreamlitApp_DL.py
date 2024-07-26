@@ -183,7 +183,7 @@ st.divider()
 ##########################################################################
 
 # Setup figure and axes for a 1x4 grid
-fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
+fig, axs = plt.subplots(1, 3, figsize=(15, 4), dpi=300)
 
 # First subplot: Just the original image
 axs[0].imshow(display_image)
