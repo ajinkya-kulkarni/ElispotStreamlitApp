@@ -114,13 +114,11 @@ y_coords = points[:, 0].astype(int)
 
 assert len(x_coords) == len(y_coords), "The lengths of x_coords and y_coords are not the same."
 
-# Pair x and y coordinates
-spot_points = list(zip(x_coords, y_coords, details.intens.flatten()))
+# Combine x, y coordinates, and intensities directly
+spot_points = np.column_stack((x_coords, y_coords, details.intens.flatten()))
 
-# Convert to numpy arrays for plotting
-x_coords = np.array([point[0] for point in spot_points])
-y_coords = np.array([point[1] for point in spot_points])
-intensities = np.array([point[2] for point in spot_points])
+# No need to convert back to NumPy arrays
+intensities = spot_points[:, 2]
 
 ##############################################################
 
