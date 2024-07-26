@@ -185,12 +185,12 @@ st.divider()
 fig, axs = plt.subplots(1, 3, figsize=(15, 4), dpi=300)
 
 # First subplot: Just the original image
-axs[0].imshow(display_image)
+axs[0].imshow(display_image, cmap="gray")
 axs[0].axis("off")
 axs[0].set_title('Image')
 
 # Third subplot: Original image with scatter points colored by intensity
-axs[1].imshow(display_image)
+axs[1].imshow(display_image, cmap="gray")
 scatter = axs[1].scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='black', c=normalized_intensities, cmap='coolwarm', alpha=0.5)
 axs[1].axis("off")
 axs[1].set_title(f'{len(y_coords)} Spots')
