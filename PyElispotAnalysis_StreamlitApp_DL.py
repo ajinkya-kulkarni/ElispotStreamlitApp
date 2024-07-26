@@ -144,7 +144,7 @@ intensity_image = normalized_mean_intensities
 ##############################################################
 
 # Define the colormap
-custom_cmap = subset_colormap(plt.cm.coolwarm_r, 0, 1)
+custom_cmap = subset_colormap(plt.cm.jet, 0, 1)
 
 ##############################################################
 
@@ -197,10 +197,9 @@ axs[0].set_title('Image')
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap,
-                         linewidth=1, edgecolors='black', alpha=0.5)
+scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap, linewidth=1, edgecolors='black', alpha=0.5)
 axs[1].axis("off")
-axs[1].set_title(f'Prediction, {len(y_coords)} Spots')
+axs[1].set_title(f'{len(y_coords)} Spots')
 
 # Add colorbar to the scatter plot
 divider = make_axes_locatable(axs[1])
@@ -209,8 +208,7 @@ cbar = fig.colorbar(scatter, cax=cax)
 cbar.set_label('Normalized Spot Intensity')
 
 # Fourth subplot: Normalized histogram of spot intensities
-n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True,
-                               alpha=0.5, rwidth=0.5)
+n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True, alpha=0.5, rwidth=0.5)
 axs[2].set_title('Normalized Spot Intensities')
 axs[2].set_xlabel('Normalized Intensity')
 axs[2].set_ylabel('Frequency')
