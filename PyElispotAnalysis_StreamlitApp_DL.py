@@ -91,22 +91,21 @@ if uploaded_file is None:
 
 ##############################################################
 
-original_image = Image.open(uploaded_file).convert('L')
-original_image_array = np.array(original_image)
+original_image_pil = Image.open(uploaded_file)
+original_image_grayscale_pil = original_image_pil.convert('L')
 
-if original_image_array.shape[0] > allowed_image_size or original_image_array.shape[1] > allowed_image_size:
+original_image_np = np.array(original_image_pil)
+original_image_grayscale_np = np.array(original_image_grayscale_pil)
+
+if original_image_grayscale_np.shape[0] > allowed_image_size or original_image_grayscale_np.shape[1] > allowed_image_size:
 	st.error('Uploaded image exceeds the allowed image size. Please reduce the image size to 1000x1000.')
 	st.stop()
 
-##########################################################################
+normalized_original_image_grayscale_np = normalize_image_percentile(original_image_grayscale_np)
 
-normalized_original_image_array = normalize_image_percentile(original_image_array)
+inverted_image_array_np = 1 - normalized_original_image_grayscale_np
 
-inverted_image_array = 1 - normalized_original_image_array
-
-##############################################################
-
-points, details = spotiflow_model.predict(inverted_image_array, exclude_border=False, verbose=False, device="cpu", subpix=True)
+points, details = spotiflow_model.predict(inverted_image_array_np, exclude_border=False, verbose=False, device="cpu", subpix=True)
 
 ##############################################################
 
@@ -116,51 +115,31 @@ y_coords = points[:, 0].astype(int)
 assert len(x_coords) == len(y_coords), "The lengths of x_coords and y_coords are not the same."
 
 # Pair x and y coordinates
-points = list(zip(x_coords, y_coords))
+spot_points = list(zip(x_coords, y_coords, details.intens.flatten()))
+
+# Convert to numpy arrays for plotting
+x_coords = np.array([point[0] for point in spot_points])
+y_coords = np.array([point[1] for point in spot_points])
+intensities = np.array([point[2] for point in spot_points])
 
 ##############################################################
 
-# Define the neighborhood size (e.g., 3 for 3x3 neighborhood)
-neighborhood_size = 10
-
-# Calculate mean intensities
-mean_intensities = []
-for point in points:
-	mean_intensity = mean_intensity_around_point(original_image_array, point, neighborhood_size)
-	mean_intensities.append(int(mean_intensity))
-
-mean_intensities = np.array(mean_intensities)
-
-min_val = mean_intensities.min()
-max_val = mean_intensities.max()
-
-normalized_mean_intensities = (mean_intensities - min_val) / (max_val - min_val)
-
-##############################################################
-
-display_image = original_image_array
-intensity_image = normalized_mean_intensities
-
-##############################################################
-
-# Define the colormap
-custom_cmap = subset_colormap(plt.cm.coolwarm_r, 0, 1)
+display_image = original_image_np
 
 ##############################################################
 
 # Create the figure with the specified size and DPI
-fig = plt.figure(figsize=(10, 5), dpi = 200)
+fig = plt.figure(figsize=(5, 5), dpi = 200)
 
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
-# scatter = plt.scatter(x_coords, y_coords, c=intensity_image, s=10, cmap=custom_cmap, linewidth=0.5, edgecolors='black', alpha=0.6)
-scatter = plt.scatter(x_coords, y_coords, s=30, linewidth=1, edgecolors='yellow', facecolors = "None", alpha=0.5)
+scatter = plt.scatter(x_coords, y_coords, s=20, linewidth=1, 
+                      edgecolors='black', facecolors = "None", alpha=0.5)
 plt.title(f'{len(x_coords)} spots detected')
 plt.axis("off")
 
 # Adjust layout
 plt.tight_layout()
-
 
 col1, col2, col3 = st.columns(3)
 
@@ -201,13 +180,13 @@ st.divider()
 fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
 
 # First subplot: Just the original image
-axs[0].imshow(display_image, cmap="gray")
+axs[0].imshow(display_image)
 axs[0].axis("off")
 axs[0].set_title('Image')
 
 # Third subplot: Original image with scatter points colored by intensity
-axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, c=intensity_image, s=20, cmap=custom_cmap, linewidth=1, edgecolors='black', alpha=0.5)
+axs[1].imshow(display_image)
+scatter = axs[1].scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='black', c=intensities, cmap='coolwarm', alpha=0.5)
 axs[1].axis("off")
 axs[1].set_title(f'{len(y_coords)} Spots')
 
@@ -258,21 +237,21 @@ st.divider()
 
 def create_intensity_stats(normalized_mean_intensities):
     stats = {
-        "Spots": len(normalized_mean_intensities),
-        "Intensity Min": np.min(normalized_mean_intensities),
-        "Intensity Max": np.max(normalized_mean_intensities),
-        "Intensity Mean": np.mean(normalized_mean_intensities),
-        "Intensity Median": np.median(normalized_mean_intensities),
-        "Intensity Std Dev": np.std(normalized_mean_intensities),
-        "Intensity Variance": np.var(normalized_mean_intensities),
-        "Intensity Mode": pd.Series(normalized_mean_intensities).mode().values[0] if not pd.Series(normalized_mean_intensities).mode().empty else np.nan
+        "Spots": len(intensities),
+        "Intensity Min": np.min(intensities),
+        "Intensity Max": np.max(intensities),
+        "Intensity Mean": np.mean(intensities),
+        "Intensity Median": np.median(intensities),
+        "Intensity Std Dev": np.std(intensities),
+        "Intensity Variance": np.var(intensities),
+        "Intensity Mode": pd.Series(intensities).mode().values[0] if not pd.Series(intensities).mode().empty else np.nan
     }
     
     return pd.DataFrame([stats])
 
 ##############################################################
 
-dataframe = create_intensity_stats(normalized_mean_intensities)
+dataframe = create_intensity_stats(intensities)
 
 st.dataframe(dataframe.style.format("{:.2f}"), use_container_width = True)
 
