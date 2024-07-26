@@ -167,7 +167,7 @@ st.pyplot(fig)
 
 # Save the figure to a bytes buffer
 buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', dpi = 200, pad_inches=0)
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = 300, pad_inches=0)
 buf.seek(0)
 # Load the image from the buffer
 pil_img = Image.open(buf)
@@ -188,12 +188,12 @@ st.divider()
 ##########################################################################
 
 # Setup figure and axes for a 1x4 grid
-fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=200)
+fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=300)
 
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
 axs[0].axis("off")
-axs[0].set_title('Image', pad=10)
+axs[0].set_title('Image')
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
@@ -206,7 +206,7 @@ axs[1].set_title(f'Prediction, {len(y_coords)} Spots')
 divider = make_axes_locatable(axs[1])
 cax = divider.append_axes("right", size="5%", pad=0.05)
 cbar = fig.colorbar(scatter, cax=cax)
-cbar.set_label('Spot Intensity')
+cbar.set_label('Normalized Spot Intensity')
 
 # Fourth subplot: Normalized histogram of spot intensities
 n, bins, patches = axs[2].hist(intensity_image, bins=10, color='tab:blue', density=True,
