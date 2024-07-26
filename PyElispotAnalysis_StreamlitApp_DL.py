@@ -144,7 +144,7 @@ intensity_image = normalized_mean_intensities
 ##############################################################
 
 # Define the colormap
-custom_cmap = subset_colormap(plt.cm.jet, 0, 1)
+custom_cmap = subset_colormap(plt.cm.coolwarm_r, 0, 1)
 
 ##############################################################
 
