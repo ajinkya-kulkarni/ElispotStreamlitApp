@@ -38,7 +38,7 @@ st.set_page_config(
 	initial_sidebar_state="expanded",
 	menu_items={
 		'Get help': 'mailto:kulkajinkya@gmail.com,
-		'Report a bug': 'mailto:kulkajinkya@gmail.com',
+		'Report a bug': 'mailto:kulkajinkya@gmail.com,
 		'About': 'This is an application for demonstrating the PyElispotAnalysis package. Developed, tested, and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni.'
 	}
 )
