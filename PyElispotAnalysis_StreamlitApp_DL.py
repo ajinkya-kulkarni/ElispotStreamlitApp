@@ -37,9 +37,9 @@ st.set_page_config(
 	layout="wide",
 	initial_sidebar_state="expanded",
 	menu_items={
-		'Get help': 'mailto:ajinkya.kulkarni@mpinat.mpg.de',
-		'Report a bug': 'mailto:ajinkya.kulkarni@mpinat.mpg.de',
-		'About': 'This is an application for demonstrating the PyElispotAnalysis package. Developed, tested, and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni at the MPI-NAT, Goettingen.'
+		'Get help': 'mailto:kulkajinkya@gmail.com,
+		'Report a bug': 'mailto:kulkajinkya@gmail.com',
+		'About': 'This is an application for demonstrating the PyElispotAnalysis package. Developed, tested, and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni.'
 	}
 )
 
@@ -51,9 +51,6 @@ st.title(':blue[Spot detection for Elispot assay images]')
 st.caption('Application screenshots and source code available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp/blob/main/image.tif).', unsafe_allow_html = False)
 
 ##########################################################################
-
-# # Create a form using the "form" method of Streamlit
-# with st.form(key = 'form1', clear_on_submit = False):
 
 # Add some text explaining what the user should do next
 st.markdown(':blue[Upload the image to be analyzed.]')
@@ -139,7 +136,7 @@ with col3:
 
 # Save the figure to a bytes buffer
 buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', dpi = 300, pad_inches=0)
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = 200, pad_inches=0)
 buf.seek(0)
 # Load the image from the buffer
 pil_img = Image.open(buf)
@@ -160,7 +157,7 @@ st.divider()
 ##########################################################################
 
 # Setup figure and axes for a 1x4 grid
-fig, axs = plt.subplots(1, 3, figsize=(15, 4), dpi=300)
+fig, axs = plt.subplots(1, 3, figsize=(15, 5), dpi=200)
 
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
