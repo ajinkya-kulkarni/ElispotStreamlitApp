@@ -166,7 +166,8 @@ axs[0].set_title('Image')
 
 # Third subplot: Original image with scatter points colored by intensity
 axs[1].imshow(display_image, cmap="gray")
-scatter = axs[1].scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='black', c=normalized_intensities, cmap='coolwarm', alpha=0.5)
+scatter = axs[1].scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='black', c=normalized_intensities, 
+			 cmap='spectral_r', alpha=0.5)
 axs[1].axis("off")
 axs[1].set_title('Spot intensities')
 
