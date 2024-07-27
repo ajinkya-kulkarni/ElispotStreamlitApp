@@ -46,9 +46,9 @@ st.set_page_config(
 ##########################################################################
 
 # Set the title of the web app
-st.title(':blue[Spot detection for Elispot assay images]')
+st.title(':blue[Deep learning based spot detection]')
 
-st.caption('Application screenshots and source code available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp/blob/main/image.tif).', unsafe_allow_html = False)
+st.caption('Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp/blob/main/image.tif).', unsafe_allow_html = False)
 
 ##########################################################################
 
@@ -168,13 +168,13 @@ axs[0].set_title('Image')
 axs[1].imshow(display_image, cmap="gray")
 scatter = axs[1].scatter(x_coords, y_coords, s=20, linewidth=0.5, edgecolors='black', c=normalized_intensities, cmap='coolwarm', alpha=0.5)
 axs[1].axis("off")
-axs[1].set_title(f'{len(y_coords)} Spots')
+axs[1].set_title('Spot intensities')
 
-# Add colorbar to the scatter plot
-divider = make_axes_locatable(axs[1])
-cax = divider.append_axes("right", size="3%", pad=0.07)
-cbar = fig.colorbar(scatter, cax=cax)
-cbar.set_label('Normalized Spot Intensity')
+# # Add colorbar to the scatter plot
+# divider = make_axes_locatable(axs[1])
+# cax = divider.append_axes("right", size="3%", pad=0.07)
+# cbar = fig.colorbar(scatter, cax=cax)
+# cbar.set_label('Normalized Spot Intensity')
 
 # Fourth subplot: Normalized histogram of spot intensities
 n, bins, patches = axs[2].hist(normalized_intensities, bins=10, color='tab:blue', density=True, alpha=0.5, rwidth=0.5)
@@ -184,7 +184,7 @@ axs[2].set_ylabel('Frequency')
 axs[2].grid(which='both', axis='y', alpha=0.1)
 axs[2].grid(which='both', axis='x', alpha=0.1)
 axs[2].set_ylim(0, np.ceil(max(n) * 10) / 10 + 0.5)
-axs[2].set_xlim(-0.02, 1.02)
+axs[2].set_xlim(-0.01, 1.01)
 
 # Adjust layout
 plt.tight_layout()
