@@ -107,10 +107,12 @@ normalized_intensities = (intensities - min_value) / (max_value - min_value)
 
 display_image = original_image_np
 
+DPI = 200
+
 ##############################################################
 
 # Create the figure with the specified size and DPI
-fig = plt.figure(figsize=(5, 5), dpi = 200)
+fig = plt.figure(figsize=(4, 4), dpi = DPI)
 
 # Plot the image and scatter plot
 plt.imshow(display_image, cmap="gray")
@@ -136,7 +138,7 @@ with col3:
 
 # Save the figure to a bytes buffer
 buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', dpi = 200, pad_inches=0)
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = DPI, pad_inches=0)
 buf.seek(0)
 # Load the image from the buffer
 pil_img = Image.open(buf)
@@ -157,7 +159,7 @@ st.divider()
 ##########################################################################
 
 # Setup figure and axes for a 1x4 grid
-fig, axs = plt.subplots(1, 3, figsize=(12, 5), dpi=200)
+fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=DPI)
 
 # First subplot: Just the original image
 axs[0].imshow(display_image, cmap="gray")
@@ -196,7 +198,7 @@ st.pyplot(fig)
 
 # Save the figure to a bytes buffer
 buf = BytesIO()
-plt.savefig(buf, format='png', bbox_inches='tight', dpi = 200, pad_inches=0)
+plt.savefig(buf, format='png', bbox_inches='tight', dpi = DPI, pad_inches=0)
 buf.seek(0)
 # Load the image from the buffer
 pil_img = Image.open(buf)
