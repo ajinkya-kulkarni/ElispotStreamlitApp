@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import pandas as pd
+from PIL import Image
 
 from spotiflow.model import Spotiflow
 spotiflow_model = Spotiflow.from_folder("Pre_Trained_Model")
