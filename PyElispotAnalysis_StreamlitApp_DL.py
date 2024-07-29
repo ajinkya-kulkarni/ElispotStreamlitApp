@@ -114,7 +114,7 @@ normalized_intensities = min_max_normalize(intensities)
 
 ##############################################################
 
-display_image = original_image_grayscale_np
+display_image = original_image_np
 
 DPI = 200
 
