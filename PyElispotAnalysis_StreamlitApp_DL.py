@@ -98,10 +98,19 @@ intensities = spot_points[:, 2]
 ##############################################################
 
 # Min-max normalization
-min_value = np.min(intensities)
-max_value = np.max(intensities)
+def min_max_normalize(intensities):
+    min_value = np.min(intensities)
+    max_value = np.max(intensities)
+    
+    if max_value == min_value:
+        # All values are the same (and potentially zero), return zeros
+        normalized_intensities = np.zeros_like(intensities)
+    else:
+        normalized_intensities = (intensities - min_value) / (max_value - min_value)
+    
+    return normalized_intensities
 
-normalized_intensities = (intensities - min_value) / (max_value - min_value)
+normalized_intensities = min_max_normalize(intensities)
 
 ##############################################################
 
