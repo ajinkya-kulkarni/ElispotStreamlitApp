@@ -18,7 +18,6 @@ ALLOWED_FILE_TYPES = ["tif", "tiff", "png", "jpg", "jpeg"]
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-@st.cache_resource
 def load_model() -> Spotiflow:
     """Load the Spotiflow model."""
     try:
@@ -28,7 +27,6 @@ def load_model() -> Spotiflow:
         st.error("Failed to load the model. Please try again later.")
         st.stop()
 
-@st.cache_data
 def process_image(uploaded_file) -> Tuple[np.ndarray, np.ndarray]:
     """Process the uploaded image file."""
     try:
@@ -46,7 +44,6 @@ def process_image(uploaded_file) -> Tuple[np.ndarray, np.ndarray]:
         st.error(f"Error processing image: {e}")
         st.stop()
 
-@st.cache_data
 def normalize_image_percentile(image: np.ndarray, small_diff_threshold: float = 1e-4) -> np.ndarray:
     """Normalize the image using percentile-based contrast stretching."""
     image = image.astype(np.float32)
@@ -58,7 +55,6 @@ def normalize_image_percentile(image: np.ndarray, small_diff_threshold: float = 
     normalized_image = np.clip((image - p1) / (p99 - p1), 0, 1)
     return normalized_image
 
-@st.cache_data
 def predict_spots(model: Spotiflow, image: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """Predict spots using the Spotiflow model."""
     try:
@@ -72,7 +68,6 @@ def predict_spots(model: Spotiflow, image: np.ndarray) -> Tuple[np.ndarray, np.n
         st.error("Failed to predict spots. Please try again.")
         st.stop()
 
-@st.cache_data
 def min_max_normalize_intensities(intensities: np.ndarray) -> np.ndarray:
     """Normalize intensities to the range [0, 1] using min-max normalization."""
     if intensities.size == 0:
@@ -85,7 +80,6 @@ def min_max_normalize_intensities(intensities: np.ndarray) -> np.ndarray:
     
     return (intensities - min_value) / (max_value - min_value)
 
-@st.cache_data
 def create_intensity_stats(normalized_intensities: np.ndarray) -> pd.DataFrame:
     """Create a DataFrame with intensity statistics."""
     if len(normalized_intensities) == 0:
@@ -113,7 +107,6 @@ def create_intensity_stats(normalized_intensities: np.ndarray) -> pd.DataFrame:
     
     return pd.DataFrame([stats])
 
-@st.cache_data
 def convert_df(df: pd.DataFrame) -> str:
     """Convert DataFrame to CSV string."""
     return df.to_csv().encode('utf-8')
