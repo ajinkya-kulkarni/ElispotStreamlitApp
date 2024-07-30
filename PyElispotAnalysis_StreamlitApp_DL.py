@@ -9,6 +9,14 @@ from spotiflow.model import Spotiflow
 from typing import Tuple, List, Optional
 import logging
 
+import sys
+# Don't generate the __pycache__ folder locally
+sys.dont_write_bytecode = True 
+# Print exception without the built-in python warning
+sys.tracebacklimit = 0
+
+from modules import *
+
 # Constants
 ALLOWED_IMAGE_SIZE = 1000
 DPI = 200
@@ -163,25 +171,6 @@ def plot_intensity_analysis(display_image: np.ndarray, x_coords: np.ndarray, y_c
     plt.tight_layout()
     return fig
 
-def save_fig_as_tiff(fig: plt.Figure, filename: str) -> None:
-    """
-    Save a matplotlib figure as a TIFF file and create a download button in Streamlit.
-    
-    Args:
-    fig (plt.Figure): The matplotlib figure to save
-    filename (str): The filename to use for the download
-    """
-    buf = BytesIO()
-    fig.savefig(buf, format='png', bbox_inches='tight', dpi=DPI, pad_inches=0)
-    buf.seek(0)
-    pil_img = Image.open(buf)
-    tiff_buf = BytesIO()
-    pil_img.save(tiff_buf, format="TIFF")
-    byte_im = tiff_buf.getvalue()
-    st.download_button(label=f"Download {filename}", data=byte_im, file_name=filename)
-    buf.close()
-    tiff_buf.close()
-
 def main():
     # Configure the Streamlit page
     st.set_page_config(
@@ -218,16 +207,46 @@ def main():
     normalized_intensities = min_max_normalize_intensities(intensities)
 
     fig1 = plot_image_with_spots(original_image_np, x_coords, y_coords)
-    col1, col2, col3 = st.columns(3)
-    with col2:
-        st.pyplot(fig1)
-    save_fig_as_tiff(fig1, "Result1.tif")
+
+    # Save fig1 as TIFF
+    buf = BytesIO()
+    fig1.savefig(buf, format='png', bbox_inches='tight', dpi=DPI, pad_inches=0)
+    buf.seek(0)
+    pil_img = Image.open(buf)
+
+	####################################
+	
+	# col1, col2, col3 = st.columns(3)
+ #    with col2:
+ #        st.pyplot(fig1)
+
+	image_comparison(img1=display_image, img2=pil_img, label1="", label2="")
+
+	####################################
+
+    tiff_buf = BytesIO()
+    pil_img.save(tiff_buf, format="TIFF")
+    byte_im = tiff_buf.getvalue()
+    st.download_button(label="Download Result1.tif", data=byte_im, file_name="Result1.tif")
+    buf.close()
+    tiff_buf.close()
 
     st.divider()
 
     fig2 = plot_intensity_analysis(original_image_np, x_coords, y_coords, normalized_intensities)
     st.pyplot(fig2)
-    save_fig_as_tiff(fig2, "Result2.tif")
+
+    # Save fig2 as TIFF
+    buf = BytesIO()
+    fig2.savefig(buf, format='png', bbox_inches='tight', dpi=DPI, pad_inches=0)
+    buf.seek(0)
+    pil_img = Image.open(buf)
+    tiff_buf = BytesIO()
+    pil_img.save(tiff_buf, format="TIFF")
+    byte_im = tiff_buf.getvalue()
+    st.download_button(label="Download Result2.tif", data=byte_im, file_name="Result2.tif")
+    buf.close()
+    tiff_buf.close()
 
     st.divider()
 
