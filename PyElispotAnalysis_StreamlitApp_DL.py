@@ -146,8 +146,8 @@ buf.close()
 
 st.divider()
 
-# Create a 1x3 grid of plots
-fig, axs = plt.subplots(1, 3, figsize=(12, 4), dpi=DPI)
+# Create a 1x3 grid of plots with custom width ratios
+fig, axs = plt.subplots(1, 3, figsize=(13, 4), dpi=DPI, gridspec_kw={'width_ratios': [1, 1.1, 1]})
 
 # Plot original image
 axs[0].imshow(display_image, cmap="gray")
@@ -164,7 +164,7 @@ if points.size != 0:
 
     # Add colorbar
     divider = make_axes_locatable(axs[1])
-    cax = divider.append_axes("right", size="3%", pad=0.07)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
     cbar = fig.colorbar(scatter, cax=cax)
     cbar.set_label('Normalized Spot intensity')
 
