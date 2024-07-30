@@ -163,6 +163,25 @@ def plot_intensity_analysis(display_image: np.ndarray, x_coords: np.ndarray, y_c
     plt.tight_layout()
     return fig
 
+def save_fig_as_tiff(fig: plt.Figure, filename: str) -> None:
+    """
+    Save a matplotlib figure as a TIFF file and create a download button in Streamlit.
+    
+    Args:
+    fig (plt.Figure): The matplotlib figure to save
+    filename (str): The filename to use for the download
+    """
+    buf = BytesIO()
+    fig.savefig(buf, format='png', bbox_inches='tight', dpi=DPI, pad_inches=0)
+    buf.seek(0)
+    pil_img = Image.open(buf)
+    tiff_buf = BytesIO()
+    pil_img.save(tiff_buf, format="TIFF")
+    byte_im = tiff_buf.getvalue()
+    st.download_button(label=f"Download {filename}", data=byte_im, file_name=filename)
+    buf.close()
+    tiff_buf.close()
+
 def main():
     # Configure the Streamlit page
     st.set_page_config(
@@ -202,31 +221,13 @@ def main():
     col1, col2, col3 = st.columns(3)
     with col2:
         st.pyplot(fig1)
-
-    buf = BytesIO()
-    fig1.savefig(buf, format='png', bbox_inches='tight', dpi=DPI, pad_inches=0)
-    buf.seek(0)
-    pil_img = Image.open(buf)
-    buf = BytesIO()
-    pil_img.save(buf, format="TIFF")
-    byte_im = buf.getvalue()
-    st.download_button(label="Download Result Image", data=byte_im, file_name="Result1.tif")
-    buf.close()
+    save_fig_as_tiff(fig1, "Result1.tif")
 
     st.divider()
 
     fig2 = plot_intensity_analysis(original_image_np, x_coords, y_coords, normalized_intensities)
     st.pyplot(fig2)
-
-    buf = BytesIO()
-    fig2.savefig(buf, format='png', bbox_inches='tight', dpi=DPI, pad_inches=0)
-    buf.seek(0)
-    pil_img = Image.open(buf)
-    buf = BytesIO()
-    pil_img.save(buf, format="TIFF")
-    byte_im = buf.getvalue()
-    st.download_button(label="Download Intensity Image", data=byte_im, file_name="Result2.tif")
-    buf.close()
+    save_fig_as_tiff(fig2, "Result2.tif")
 
     st.divider()
 
