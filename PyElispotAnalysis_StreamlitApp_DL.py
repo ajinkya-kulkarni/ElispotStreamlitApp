@@ -205,7 +205,7 @@ def main():
     )
 
     st.title(':blue[Deep learning based spot detection]')
-    st.caption('Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/ElispotStreamlitApp/blob/main/image.tif).', 
+    st.caption('Sample image to test this application is available [here](https://drive.google.com/file/d/1bzMhuK2-Wf7QGHTcw8HCqqZGZ4T8xcvk/view?usp=sharing).', 
                unsafe_allow_html=False)
 
     model = load_model()
