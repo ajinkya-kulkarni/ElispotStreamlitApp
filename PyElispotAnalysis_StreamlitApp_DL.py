@@ -18,7 +18,7 @@ sys.tracebacklimit = 0
 # from modules import *
 
 # Constants
-ALLOWED_IMAGE_SIZE = 1000
+ALLOWED_IMAGE_SIZE = 1500
 DPI = 200
 ALLOWED_FILE_TYPES = ["tif", "tiff", "png", "jpg", "jpeg"]
 
