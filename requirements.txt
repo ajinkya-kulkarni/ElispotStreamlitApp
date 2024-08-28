@@ -5,4 +5,4 @@ matplotlib
 Pillow
 torch
 torchvision
-spotiflow==0.3.0
+spotiflow
